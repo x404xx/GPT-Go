@@ -1,4 +1,4 @@
-import json
+from json import loads
 from textwrap import dedent
 
 from httpx import Client
@@ -56,7 +56,7 @@ class GptGo:
         ):
 
         full_response = [
-            json.loads(line[6:])['choices'][0]['delta'].get('content', '')
+            loads(line[6:])['choices'][0]['delta'].get('content', '')
             for line in response.decode('utf-8').splitlines()
             if line.startswith('data: ') and line[6:] != '[DONE]'
         ]
