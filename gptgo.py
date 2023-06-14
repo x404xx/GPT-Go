@@ -66,6 +66,13 @@ class GptGo:
             if full_response.endswith('[DONE]')
             else 'An error occurred while processing the response!'
         )
+    
+    def send_message(self, token: str):
+        response = self.client.get(
+            f'{self.base_url}/action_ai_gpt.php',
+            params={'token': str(token)}
+        )
+        return response.content
 
     def run(self):
         self.console.clear()
@@ -79,11 +86,8 @@ class GptGo:
                 print(dedent(self.OPTIONS))
             else:
                 token = self.get_token(query)
-                response = self.client.get(
-                    f'{self.base_url}/action_ai_gpt.php',
-                    params={'token': str(token)}
-                )
-                result = self.process_data(response.content)
+                response_content = self.send_message(token)
+                result = self.process_data(response_content)
                 self.console.print(Markdown(result, code_theme='fruity'))
                 print()
 
