@@ -67,7 +67,10 @@ class GptGo:
             else 'An error occurred while processing the response!'
         )
     
-    def send_message(self, token: str):
+    def send_message(
+        self, token: str
+        ):
+        
         response = self.client.get(
             f'{self.base_url}/action_ai_gpt.php',
             params={'token': str(token)}
